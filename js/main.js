@@ -17,6 +17,8 @@ function uuidv4() {
 const studentUrl = "http://localhost:3000/students";
 const ul = document.querySelector(".students__list");
 const form = document.getElementById("dataForm");
+const formEdit = document.getElementById("formEdit");
+const student = document.querySelector(".student");
 
 /**
  * Get all data from the Server
@@ -47,6 +49,13 @@ const printList = async (element, items) => {
 			<p><span class="bold">Surname: </span>${data[i].surname}</p>
 			<p><span class="bold">Register: </span>${data[i].register}</p>
 			<button class="btn-delete" onclick="deleteElement('${data[i].id}')">Delete</button>
+			<button class="btn-edit" onclick="buildEditForm(
+				{
+					id:'${data[i].id}',
+					name: '${data[i].name}',
+					surname:'${data[i].surname}',
+					register:'${data[i].register}',
+				})">Edit</button>
 		</div>
 	</li>
 		`;
@@ -63,6 +72,7 @@ form.addEventListener("submit", (e) => {
   const prePayload = new FormData(form);
   prePayload.append("id", uuidv4());
   const payload = new URLSearchParams(prePayload);
+  console.log(payload);
 
   fetch(studentUrl, {
     method: "POST",
@@ -78,17 +88,59 @@ form.addEventListener("submit", (e) => {
   });
 });
 
+formEdit.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const prePayload = new FormData(formEdit);
+  const payload = new URLSearchParams(prePayload);
+
+  const editUrl = `${studentUrl}/${payload.get("id")}`;
+
+  fetch(editUrl, {
+    method: "PUT",
+    body: payload,
+  }).then((res) => {
+    // if the post has not succesfull throw and error
+    if (!res.ok) {
+      throw new Error("Failed to put");
+    }
+    // if the post is succesfull the page will be updates
+    printList(ul, getData(studentUrl));
+    return res.json();
+  });
+});
+
 function deleteElement(id) {
   const deleteUrl = `${studentUrl}/${id}`;
   fetch(deleteUrl, {
     method: "DELETE",
   }).then((res) => {
-    // if the post has not succesfull throw and error
+    // if the delete has not succesfull throw and error
     if (!res.ok) {
       throw new Error("Failed to delete");
     }
     // if the delete is succesfull remove line
   });
+}
+
+function buildEditForm(student) {
+  const edit = document.querySelector("#edit");
+  edit.classList.remove("hidden");
+
+  document.forms["formEdit"].name.value = student.name;
+  document.forms["formEdit"].surname.value = student.surname;
+  document.forms["formEdit"].register.value = student.register;
+  document.forms["formEdit"].id.value = student.id;
+  /*	
+	fetch(editUrl, {
+    method: "PUT",
+  }).then((res) => {
+    // if the put has not succesfull throw and error
+    if (!res.ok) {
+      throw new Error("Failed to update");
+    }
+    // if the put is succesfull show new data
+  });*/
 }
 
 /**

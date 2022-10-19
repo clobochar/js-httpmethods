@@ -59,3 +59,7 @@ main {
 .action-container input {
   flex-grow: 1;
 }
+
+.hidden {
+  display: none;
+}
