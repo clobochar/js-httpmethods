@@ -46,8 +46,7 @@ const printList = async (element, items) => {
 			<p><span class="bold">Name: </span>${data[i].name}</p>
 			<p><span class="bold">Surname: </span>${data[i].surname}</p>
 			<p><span class="bold">Register: </span>${data[i].register}</p>
-			<button class="btn-delete">Delete</button>
-			<button class="btn-edit">Edit</button>
+			<button class="btn-delete" onclick="deleteElement('${data[i].id}')">Delete</button>
 		</div>
 	</li>
 		`;
@@ -57,26 +56,40 @@ const printList = async (element, items) => {
 /**
  * Get data from the Form and send them to the server
  */
-form.addEventListener("submit", (e, url) => {
+form.addEventListener("submit", (e) => {
   e.preventDefault();
+
   // Creates a new object that conintains all the data from the form
   const prePayload = new FormData(form);
   prePayload.append("id", uuidv4());
   const payload = new URLSearchParams(prePayload);
 
-  fetch(url, {
+  fetch(studentUrl, {
     method: "POST",
     body: payload,
   }).then((res) => {
     // if the post has not succesfull throw and error
     if (!res.ok) {
-      throw new Error("The some problem with you request");
+      throw new Error("Failed to post");
     }
     // if the post is succesfull the page will be updates
-    printList(ul, getData(url));
+    printList(ul, getData(studentUrl));
     return res.json();
   });
 });
+
+function deleteElement(id) {
+  const deleteUrl = `${studentUrl}/${id}`;
+  fetch(deleteUrl, {
+    method: "DELETE",
+  }).then((res) => {
+    // if the post has not succesfull throw and error
+    if (!res.ok) {
+      throw new Error("Failed to delete");
+    }
+    // if the delete is succesfull remove line
+  });
+}
 
 /**
  * On page load all the data are retrieved

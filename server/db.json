@@ -1,24 +1,6 @@
 {
   "students": [
     {
-      "id": "0bdf3b7b-44ef-458a-b2ff-0b46ba8b5fd2",
-      "name": "Joao",
-      "surname": "Guimaraes",
-      "register": "AAAE"
-    },
-    {
-      "id": "46f1a7ae-63cc-4e34-ac58-a19dfc44bcf0",
-      "name": "Laura",
-      "surname": "Clochobar",
-      "register": "AAAC"
-    },
-    {
-      "id": "46f15cb2-e38d-433e-8d7c-6dc6d7491d63",
-      "name": "Emerson",
-      "surname": "Lopes",
-      "register": "AAAD"
-    },
-    {
       "id": "48f15cb2-e38d-433e-8d7c-6dc6d7491d63",
       "name": "Alejandro",
       "surname": "Ortega",
@@ -29,6 +11,24 @@
       "name": "Emanuele",
       "surname": "Gurini",
       "register": "AAAE"
+    },
+    {
+      "name": "teste",
+      "surname": "test",
+      "register": "AAAB",
+      "id": "d2856f0b-a1b8-4c41-a18b-7e16ecd5fb56"
+    },
+    {
+      "name": "teste",
+      "surname": "test",
+      "register": "AAAB",
+      "id": "33502c0c-8dc0-47c7-a187-f610e5619df4"
+    },
+    {
+      "name": "teste",
+      "surname": "test",
+      "register": "AAAB",
+      "id": "78f3d55e-61b5-481a-bb40-c8548c1d67da"
     }
   ]
 }
