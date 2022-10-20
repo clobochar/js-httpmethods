@@ -45,3 +45,38 @@ function showList() {
 }
 
 showList();
+
+/**
+ * Adds the event of POST to the Send button on the Form
+ * @param {*} e
+ */
+form.onsubmit = function (e) {
+  e.preventDefault();
+
+  const name = document.forms["dataForm"].name.value;
+  const surname = document.forms["dataForm"].surname.value;
+  const register = document.forms["dataForm"].register.value;
+
+  console.log(name, surname, register);
+
+  fetch(API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name,
+      surname,
+      register,
+    }),
+  }).then((response) => {
+    response.json().then((data) => {
+      if (data.message === "success") {
+        form.reset();
+        showList();
+      } else {
+        console.log("There are some error");
+      }
+    });
+  });
+};
